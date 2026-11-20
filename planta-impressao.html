@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Planta Baixa e Contagem de Blocos Estruturais | V1</title>
+    <link rel="stylesheet" href="/src/styles/print.css" />
+  </head>
+  <body>
+    <header class="print-toolbar">
+      <div class="toolbar-left">
+        <a href="./" class="back-link">← Voltar ao Passeio 3D</a>
+        <h1 class="toolbar-title">Planta Imprimível e Lista de Blocos Estruturais (V1)</h1>
+      </div>
+
+      <div class="toolbar-right">
+        <div class="segmented-group" role="group" aria-label="Margem de quebra de blocos">
+          <button type="button" class="seg-btn" data-breakage="5" aria-pressed="false">Quebra 5%</button>
+          <button type="button" class="seg-btn" data-breakage="10" aria-pressed="true">Quebra 10%</button>
+          <button type="button" class="seg-btn" data-breakage="15" aria-pressed="false">Quebra 15%</button>
+        </div>
+        <button type="button" id="print-btn" class="primary-btn">Imprimir / Salvar PDF</button>
+      </div>
+    </header>
+
+    <main class="sheets-container">
+      <section class="sheet" aria-labelledby="sheet-1-title">
+        <div class="sheet-header">
+          <h2 id="sheet-1-title">Folha 1/2: Planta Baixa Estrutural Cotada e Corte Esquemático (Versão 1)</h2>
+          <div class="sheet-meta">
+            <span><strong>Bloco:</strong> Concreto Estrutural 14×19×39 cm</span>
+            <span><strong>Piso:</strong> Radier Polido (51,30 m²)</span>
+            <span><strong>Cobertura:</strong> Telha Sanduíche + Laje Exposta 7,60 m²</span>
+          </div>
+        </div>
+
+        <div id="floorplan-svg-host" class="svg-frame"></div>
+        <div id="section-svg-host" class="svg-frame"></div>
+      </section>
+
+      <section class="sheet" aria-labelledby="sheet-2-title">
+        <div class="sheet-header">
+          <h2 id="sheet-2-title">Folha 2/2: Lista de Blocos, Memória por Parede e Orçamento Estimado (Itapevi/SP)</h2>
+          <div class="sheet-meta">
+            <span><strong>Escopo:</strong> Casa principal V1 (13,50 × 3,80 m, sem muros externos)</span>
+            <span><strong>Módulo:</strong> 12,5 blocos/m²</span>
+            <span><strong>Região de custo:</strong> Itapevi / Grande SP (SINAPI-SP / Mercado Local)</span>
+          </div>
+        </div>
+
+        <div tabindex="0" role="region" aria-labelledby="summary-caption" class="table-wrapper">
+          <table>
+            <caption id="summary-caption">Resumo Consolidado por Tipo de Bloco Estrutural (14×19×39 cm)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Tipo de bloco</th>
+                <th scope="col">Dimensões</th>
+                <th scope="col">Aplicação na obra</th>
+                <th scope="col" class="num">Qtd. líquida</th>
+                <th scope="col" class="num" id="summary-breakage-head">+10% quebra</th>
+                <th scope="col" class="num">Compra sugerida</th>
+                <th scope="col" class="num">Unit. (Itapevi)</th>
+                <th scope="col" class="num">Subtotal blocos</th>
+              </tr>
+            </thead>
+            <tbody id="summary-table-body"></tbody>
+            <tfoot>
+              <tr>
+                <th scope="row" colspan="3">Total geral de blocos estruturais (casa principal)</th>
+                <td class="num" id="summary-total-net"></td>
+                <td class="num"></td>
+                <td class="num" id="summary-total-purchase"></td>
+                <td class="num" id="summary-unit-note">Média Itapevi/SP</td>
+                <td class="num" id="summary-total-cost"></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div tabindex="0" role="region" aria-labelledby="walls-caption" class="table-wrapper">
+          <table class="walls-table">
+            <caption id="walls-caption">Detalhamento Parede por Parede (P1 a P8)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Cód.</th>
+                <th scope="col">Parede</th>
+                <th scope="col" class="num">Comp. (m)</th>
+                <th scope="col">Altura / Inclinação</th>
+                <th scope="col">Aberturas descontadas</th>
+                <th scope="col" class="num">Área líq.</th>
+                <th scope="col" class="num">Inteiro</th>
+                <th scope="col" class="num">Meio</th>
+                <th scope="col" class="num">Amarr.</th>
+                <th scope="col" class="num">Canaleta</th>
+              </tr>
+            </thead>
+            <tbody id="walls-table-body"></tbody>
+            <tfoot>
+              <tr id="walls-totals-row"></tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div tabindex="0" role="region" aria-labelledby="budget-caption" class="table-wrapper">
+          <table class="budget-table">
+            <caption id="budget-caption">Orçamento Estimado da Obra Completa: Região de Itapevi / Grande SP (Casa Principal V1: 51,30 m²)</caption>
+            <thead>
+              <tr>
+                <th scope="col">Etapa da obra</th>
+                <th scope="col">Quantitativo e escopo (Radier 51,30 m² / Laje 7,60 m² / Telha 47,41 m²)</th>
+                <th scope="col" class="num">Materiais (R$)</th>
+                <th scope="col" class="num">Mão de obra (R$)</th>
+                <th scope="col" class="num">Total etapa (R$)</th>
+              </tr>
+            </thead>
+            <tbody id="budget-table-body"></tbody>
+            <tfoot>
+              <tr id="budget-totals-row"></tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div id="aux-areas-grid" class="summary-grid"></div>
+
+        <p class="tech-note">
+          <strong>Nota técnica e de orçamento (Itapevi/SP):</strong> Estimativa de alvenaria estrutural (14×19×39 cm, junta 1 cm) e custos regionais referenciados pelo <strong>SINAPI-SP / CUB-SP</strong> e fornecedores da Zona Oeste da Grande SP (terreno, projetos/taxas de Prefeitura e muros externos fora da conta). Sobre o vão frontal de <strong>3,15 m (P3)</strong>, o respaldo de 30 cm exige <strong>viga armada in loco</strong>. Valide MPa dos blocos, graute, radier e armação da laje com o engenheiro ou mestre de obras local antes das compras.
+        </p>
+      </section>
+    </main>
+
+    <script type="module" src="/src/print/printSheet.js"></script>
+  </body>
+</html>
