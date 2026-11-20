@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Passeio 3D da Casa | Planta Interativa</title>
+    <script type="module" crossorigin src="./assets/main-BaclObqC.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/firstCourseV1-DrvdFeUO.js">
+    <link rel="stylesheet" crossorigin href="./assets/main-CD0aGEmj.css">
+  </head>
+  <body>
+    <header class="top-bar hud-panel">
+      <div class="brand-group">
+        <h1 class="brand-title">Planta 3D</h1>
+        <p id="current-room-label" class="room-status">Sala (3,80 m × 3,00 m)</p>
+      </div>
+
+      <div class="center-switches">
+        <div class="segmented-group" role="group" aria-label="Versão da planta">
+          <button type="button" class="seg-btn" data-version="v1" aria-pressed="false">
+            V1: Quintal
+          </button>
+          <button type="button" class="seg-btn" data-version="v2" aria-pressed="true">
+            V2: Edícula
+          </button>
+          <button type="button" class="seg-btn" data-version="v3" aria-pressed="false">
+            V3: 1ª Fiada
+          </button>
+        </div>
+
+        <div class="segmented-group" role="group" aria-label="Modo de câmera">
+          <button type="button" class="seg-btn" data-camera-mode="walk" aria-pressed="true">
+            Caminhar
+          </button>
+          <button type="button" class="seg-btn" data-camera-mode="aerial" aria-pressed="false">
+            Vista aérea
+          </button>
+        </div>
+      </div>
+
+      <div class="toolbar-actions">
+        <div class="desktop-only-actions">
+          <button type="button" class="toggle-btn" data-action="ceiling" aria-pressed="true">
+            Teto
+          </button>
+          <button type="button" class="toggle-btn" data-action="furniture" aria-pressed="true">
+            Móveis
+          </button>
+          <button type="button" class="toggle-btn" data-action="labels" aria-pressed="false">
+            Medidas
+          </button>
+          <button type="button" class="toggle-btn" data-action="lighting" aria-pressed="false">
+            Luz: Dia
+          </button>
+          <a
+            href="./planta-impressao.html"
+            target="_blank"
+            rel="noopener"
+            class="nav-link-btn print-plan-link"
+          >
+            Planta Blocos
+          </a>
+        </div>
+
+        <button
+          type="button"
+          class="toggle-btn options-trigger"
+          commandfor="options-popover"
+          command="toggle-popover"
+        >
+          Opções
+        </button>
+
+        <button
+          type="button"
+          class="help-btn"
+          commandfor="help-dialog"
+          command="show-modal"
+        >
+          Ajuda
+        </button>
+      </div>
+    </header>
+
+    <div id="options-popover" popover aria-label="Opções de visualização">
+      <button type="button" class="toggle-btn" data-action="ceiling" aria-pressed="true">
+        Teto
+      </button>
+      <button type="button" class="toggle-btn" data-action="furniture" aria-pressed="true">
+        Móveis
+      </button>
+      <button type="button" class="toggle-btn" data-action="labels" aria-pressed="false">
+        Medidas
+      </button>
+      <button type="button" class="toggle-btn" data-action="lighting" aria-pressed="false">
+        Luz: Dia
+      </button>
+      <a
+        href="./planta-impressao.html"
+        target="_blank"
+        rel="noopener"
+        class="nav-link-btn print-plan-link"
+      >
+        Planta Blocos
+      </a>
+    </div>
+
+    <main id="viewport-stage">
+      <canvas id="scene-canvas" aria-label="Visualização 3D interativa da planta residencial"></canvas>
+    </main>
+
+    <nav
+      id="room-nav"
+      class="room-nav hud-panel"
+      tabindex="0"
+      aria-label="Atalhos de cômodos"
+    ></nav>
+
+    <aside class="side-dock" aria-label="Minimapa e controles de caminhada">
+      <div id="minimap-panel" class="minimap-card hud-panel">
+        <div class="minimap-header">
+          <span class="minimap-label">Planta</span>
+          <button
+            type="button"
+            id="toggle-minimap"
+            class="minimap-toggle"
+            aria-expanded="true"
+            aria-controls="minimap-canvas"
+          >
+            Ocultar
+          </button>
+        </div>
+        <canvas id="minimap-canvas" aria-label="Minimapa clicável da planta baixa"></canvas>
+        <p class="minimap-hint">Toque no mapa para ir</p>
+      </div>
+
+      <div class="walk-pad hud-panel" role="group" aria-label="Controles de movimento">
+        <button type="button" class="pad-btn pad-up" data-pad-action="forward" aria-label="Andar para frente">
+          ↑
+        </button>
+        <button type="button" class="pad-btn pad-left" data-pad-action="turn-left" aria-label="Girar à esquerda">
+          ↺
+        </button>
+        <button type="button" class="pad-btn pad-down" data-pad-action="backward" aria-label="Andar para trás">
+          ↓
+        </button>
+        <button type="button" class="pad-btn pad-right" data-pad-action="turn-right" aria-label="Girar à direita">
+          ↻
+        </button>
+      </div>
+    </aside>
+
+    <dialog id="help-dialog" closedby="any" aria-labelledby="help-title">
+      <div class="dialog-head">
+        <h2 id="help-title">Como passear pela casa</h2>
+      </div>
+      <ul class="help-list">
+        <li><strong>Olhar em volta:</strong> arraste o dedo na tela (celular) ou clique e arraste com o mouse (PC).</li>
+        <li><strong>Andar pelos cômodos:</strong> segure os botões direcionais no canto inferior direito, ou use W, A, S, D e setas no PC.</li>
+        <li><strong>Alternar versões:</strong> use <strong>V1: Quintal</strong> ou <strong>V2: Edícula</strong> no topo para comparar os dois projetos.</li>
+        <li><strong>Pular direto para um ambiente:</strong> toque no nome do cômodo na barra inferior ou em qualquer ponto do minimapa.</li>
+        <li><strong>Ver tudo de cima:</strong> toque em <strong>Vista aérea</strong> (o teto some automaticamente para mostrar os móveis e o quintal).</li>
+      </ul>
+      <button type="button" class="dialog-close-btn" commandfor="help-dialog" command="close" autofocus>
+        Entendi
+      </button>
+    </dialog>
+
+    <div id="live-status" class="visually-hidden" aria-live="polite"></div>
+
+  </body>
+</html>
